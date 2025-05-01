@@ -34,7 +34,7 @@ interface NewsResponse {
 
 // Create axios instance with base configuration
 export const apiClient = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://sangh-buy.onrender.com/api',
   headers: {
     'Content-Type': 'application/json'
   }
