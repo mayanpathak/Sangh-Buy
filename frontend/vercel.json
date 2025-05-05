@@ -1,0 +1,13 @@
+{
+    "rewrites": [
+      { "source": "/login", "destination": "/" },
+      { "source": "/signup", "destination": "/" },
+      { "source": "/dashboard", "destination": "/" },
+      { "source": "/start-saving", "destination": "/" },
+      { "source": "/create-pool", "destination": "/" },
+      { "source": "/browse-pools", "destination": "/" },
+      { "source": "/chatbot", "destination": "/" },
+      { "source": "/news", "destination": "/" }
+    ]
+  }
+  
