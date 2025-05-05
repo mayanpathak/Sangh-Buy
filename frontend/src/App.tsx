@@ -17,25 +17,21 @@ import News from "@/pages/News";
 import { useRef } from "react";
 
 const clerkKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
 if (!clerkKey) {
   console.error("❌ Clerk Publishable Key is missing! Add it to your .env file.");
 }
 
 // Protected route component
 const ProtectedRoute = ({ children }) => (
-  <>
-    <SignedIn>{children}</SignedIn>
-    <SignedOut>
-      <RedirectToSignIn />
-    </SignedOut>
-  </>
+  <SignedIn>
+    {children}
+  </SignedIn>
 );
 
 const AppContent = () => {
   const heroRef = useRef(null);
   const navigate = useNavigate();
-  
+
   const handlePreviewClick = () => {
     if (window.location.pathname !== '/') {
       navigate('/');
@@ -46,7 +42,7 @@ const AppContent = () => {
       heroRef.current?.querySelector('[data-ref="slideshowRef"]')?.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  
+
   return (
     <>
       <Navbar onPreviewClick={handlePreviewClick} />
@@ -55,16 +51,72 @@ const AppContent = () => {
         <Route path="/" element={<Index ref={heroRef} />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/testimonials" element={<TestimonialsPage />} />
-        <Route path="/login/*" element={<Login />} />
-        <Route path="/signup/*" element={<Signup />} />
-        
+        <Route 
+          path="/login/*" 
+          element={
+            <SignedOut>
+              <Login />
+            </SignedOut>
+          } 
+        />
+        <Route 
+          path="/signup/*" 
+          element={
+            <SignedOut>
+              <Signup />
+            </SignedOut>
+          } 
+        />
+
         {/* Protected Routes */}
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/start-saving" element={<ProtectedRoute><StartSaving /></ProtectedRoute>} />
-        <Route path="/create-pool" element={<ProtectedRoute><CreatePool /></ProtectedRoute>} />
-        <Route path="/browse-pools" element={<ProtectedRoute><BrowsePools /></ProtectedRoute>} />
-        <Route path="/chatbot" element={<ProtectedRoute><Chatbot /></ProtectedRoute>} />
-        <Route path="/news" element={<ProtectedRoute><News /></ProtectedRoute>} />
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/start-saving" 
+          element={
+            <ProtectedRoute>
+              <StartSaving />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/create-pool" 
+          element={
+            <ProtectedRoute>
+              <CreatePool />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/browse-pools" 
+          element={
+            <ProtectedRoute>
+              <BrowsePools />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/chatbot" 
+          element={
+            <ProtectedRoute>
+              <Chatbot />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/news" 
+          element={
+            <ProtectedRoute>
+              <News />
+            </ProtectedRoute>
+          } 
+        />
         
         {/* Catch-all route */}
         <Route path="*" element={<NotFound />} />
@@ -74,23 +126,19 @@ const AppContent = () => {
 };
 
 const App = () => (
-  <ClerkProvider
-    publishableKey={clerkKey}
-    appearance={{
-      elements: {
-        formButtonPrimary: "bg-primary",
-        card: "shadow-none",
-        headerTitle: "Welcome",
-        headerSubtitle: "Start your group buying journey",
-        socialButtonsBlockButton: "bg-white border-2 border-stone-200",
-        formFieldInput: "border-2 border-stone-200",
-        footerActionLink: "text-primary hover:text-primary-dark"
-      }
+  <ClerkProvider 
+    publishableKey={clerkKey} 
+    appearance={{ 
+      elements: { 
+        formButtonPrimary: "bg-primary", 
+        card: "shadow-none", 
+        headerTitle: "Welcome", 
+        headerSubtitle: "Start your group buying journey", 
+        socialButtonsBlockButton: "bg-white border-2 border-stone-200", 
+        formFieldInput: "border-2 border-stone-200", 
+        footerActionLink: "text-primary hover:text-primary-dark" 
+      } 
     }}
-    signInUrl="/login"
-    signUpUrl="/signup"
-    afterSignInUrl="/dashboard"
-    afterSignUpUrl="/start-saving"
   >
     <ThemeProvider defaultTheme="dark">
       <BrowserRouter>
